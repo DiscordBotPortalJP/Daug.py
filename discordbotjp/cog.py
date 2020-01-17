@@ -20,8 +20,10 @@ class DiscordBotPortalJP(commands.Cog):
         ]
 
     async def dispatch_thread(self, message):
+        if len(name := message.content) > 30:
+            name = f'{base36(len(message.guild.text_channels))}-{message.channel.name}'
         channel_issue = await message.guild.create_text_channel(
-            name=f'{base36(len(message.guild.text_channels))}-{message.channel.name}',
+            name=name,
             category=message.guild.get_channel(self.category_open_id),
         )
         await channel_issue.edit(position=0)
@@ -29,6 +31,9 @@ class DiscordBotPortalJP(commands.Cog):
         await message.channel.send(
             embed=get_default_embed(f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
         )
+        if len(message.content) <= 30:
+            await message.delete()
+            return
         await channel_issue.send(
             '質問のタイトルを入力してください。チャンネル名に反映します。'
         )
@@ -133,17 +138,6 @@ class DiscordBotPortalJP(commands.Cog):
         if member.guild.id != self.id:
             return
         await member.guild.system_channel.send(f'{member.mention} が退出しました')
-
-    @commands.Cog.listener()
-    async def on_message_delete(self, message):
-        if message.guild.id != self.id:
-            return
-        if message.author.bot:
-            return
-        if self.bot.is_owner(message.author):
-            return
-        text = f'{message.author.display_name} が {message.created_at} のメッセージを削除しました'
-        await message.channel.send(embed=get_default_embed(text))
 
 
 def setup(bot):
