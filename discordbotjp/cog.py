@@ -32,6 +32,7 @@ class DiscordBotPortalJP(commands.Cog):
             embed=get_default_embed(f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
         )
         if len(message.content) <= 30:
+            await message.delete()
             return
         await channel_issue.send(
             '質問のタイトルを入力してください。チャンネル名に反映します。'
