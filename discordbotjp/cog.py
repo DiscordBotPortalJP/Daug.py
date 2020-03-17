@@ -95,12 +95,12 @@ class DiscordBotPortalJP(commands.Cog):
 
     @commands.command()
     async def archive(self, ctx):
-        if self.role_contributor_id in [role.id for role in message.author.roles]:
-            await channel.edit(
-                category=channel.guild.get_channel(self.category_archive_id)
+        if self.role_contributor_id in [role.id for role in ctx.author.roles]:
+            await ctx.channel.edit(
+                category=ctx.channel.guild.get_channel(self.category_archive_id)
             )
             return
-        if not message.author.guild_permissions.administrator:
+        if not ctx.author.guild_permissions.administrator:
             return
         guild = self.bot.get_guild(self.guild_logs_id)
         channel = await guild.create_text_channel(
