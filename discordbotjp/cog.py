@@ -9,6 +9,7 @@ class DiscordBotPortalJP(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.id = 494911447420108820
+        self.guild_logs_id = 674500858054180874
         self.role_member_id = 579591779364372511
         self.category_issues_id = 601219955035209729
         self.category_open_id = 575935336765456394
@@ -92,7 +93,7 @@ class DiscordBotPortalJP(commands.Cog):
 
     @commands.command()
     async def archive(self, ctx):
-        guild = self.bot.get_guild(674500858054180874)
+        guild = self.bot.get_guild(self.guild_logs_id)
         channel = await guild.create_text_channel(
             name=ctx.channel.name,
             topic=str(ctx.channel.created_at)
