@@ -90,6 +90,20 @@ class DiscordBotPortalJP(commands.Cog):
             return
         await self.dispatch_rename(ctx.message, rename)
 
+    @commands.command()
+    async def archive(self, ctx):
+        guild = self.bot.get_guild(674500858054180874)
+        channel = await guild.create_text_channel(
+            name=ctx.channel.name,
+            topic=str(ctx.channel.created_at)
+        )
+        messages = await ctx.channel.history().flatten()
+        for message in reversed(messages):
+            if message.content:
+                await channel.send(embed=compose_embed(message))
+            for embed in message.embeds:
+                await channel.send(embed=embed)
+
     @commands.Cog.listener()
     async def on_message(self, message):
         if message.guild.id != self.id:
