@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='discordbotjp',
-    version='1.0',
+    version='2020.3.17',
     py_modules=find_packages(),
     install_requires=[
         'discord.py >= 1.2.5',
