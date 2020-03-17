@@ -9,10 +9,13 @@ class DiscordBotPortalJP(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.id = 494911447420108820
+        self.guild_logs_id = 674500858054180874
         self.role_member_id = 579591779364372511
+        self.role_contributor_id = 631299456037289984
         self.category_issues_id = 601219955035209729
         self.category_open_id = 575935336765456394
         self.category_closed_id = 640090897417240576
+        self.category_archive_id = 689447835590066212
         self.close_keywords = [
             'close', 'closes', 'closed',
             'fix', 'fixes', 'fixed',
@@ -89,6 +92,27 @@ class DiscordBotPortalJP(commands.Cog):
         if not any(conditions):
             return
         await self.dispatch_rename(ctx.message, rename)
+
+    @commands.command()
+    async def archive(self, ctx):
+        if self.role_contributor_id in [role.id for role in message.author.roles]:
+            await channel.edit(
+                category=channel.guild.get_channel(self.category_archive_id)
+            )
+            return
+        if not message.author.guild_permissions.administrator:
+            return
+        guild = self.bot.get_guild(self.guild_logs_id)
+        channel = await guild.create_text_channel(
+            name=ctx.channel.name,
+            topic=str(ctx.channel.created_at)
+        )
+        messages = await ctx.channel.history().flatten()
+        for message in reversed(messages):
+            if message.content:
+                await channel.send(embed=compose_embed(message))
+            for embed in message.embeds:
+                await channel.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_message(self, message):
