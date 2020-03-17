@@ -93,6 +93,8 @@ class DiscordBotPortalJP(commands.Cog):
 
     @commands.command()
     async def archive(self, ctx):
+        if not message.author.guild_permissions.administrator:
+            return
         guild = self.bot.get_guild(self.guild_logs_id)
         channel = await guild.create_text_channel(
             name=ctx.channel.name,
