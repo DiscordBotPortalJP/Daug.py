@@ -66,7 +66,7 @@ class DiscordBotPortalJP(commands.Cog):
     def is_category_closed(self, channel):
         if '✅' in channel.category.name:
             return True
-        if '⛔' in channel.category.name:
+        if '🚫' in channel.category.name:
             return True
         return False
 
@@ -124,7 +124,7 @@ class DiscordBotPortalJP(commands.Cog):
     async def archive(self, ctx):
         channel = ctx.channel
         author = ctx.author
-        await dispatch_archive(channel, author)
+        await self.dispatch_archive(channel, author)
 
     @commands.Cog.listener()
     async def on_message(self, message):
