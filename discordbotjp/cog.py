@@ -24,7 +24,7 @@ class DiscordBotPortalJP(commands.Cog):
 
     async def dispatch_thread(self, message):
         if len(name := message.content) > 30:
-            name = f'{base36(len(message.guild.text_channels))}-{message.channel.name}'
+            name = message.channel.name
         channel_issue = await message.guild.create_text_channel(
             name=name,
             category=message.guild.get_channel(self.category_open_id),
