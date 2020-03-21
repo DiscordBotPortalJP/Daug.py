@@ -70,7 +70,7 @@ class DiscordBotPortalJP(commands.Cog):
             return True
         return False
 
-    def is_category_thread(self.channel):
+    def is_category_thread(self, channel):
         if self.is_category_open(channel):
             return True
         if self.is_category_closed(channel):
