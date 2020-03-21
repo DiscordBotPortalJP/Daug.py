@@ -162,9 +162,10 @@ class DiscordBotPortalJP(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
+        author = channel.guild.get_member(payload.user_id)
         if payload.guild_id != self.id:
             return
-        if self.bot.get_user(payload.user_id).bot:
+        if author.bot:
             return
         if payload.emoji.name == '✅':
             if not self.is_category_open(channel):
@@ -173,7 +174,7 @@ class DiscordBotPortalJP(commands.Cog):
         if payload.emoji.name == '🚫':
             if not self.is_category_thread(channel):
                 return
-            await self.dispatch_archive(channel)
+            await self.dispatch_archive(channel, author)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
