@@ -21,18 +21,22 @@ class DiscordBotPortalJP(commands.Cog):
             'fix', 'fixes', 'fixed',
             'resolve', 'resolves', 'resolved',
         ]
+        self.message_on_thread = \
+            'この質問スレッドは close と発言することで解決済みカテゴリに移動します。'
 
     async def dispatch_thread(self, message):
         if len(name := message.content) > 30:
-            name = f'{base36(len(message.guild.text_channels))}-{message.channel.name}'
+            name = message.channel.name
         channel_issue = await message.guild.create_text_channel(
             name=name,
             category=message.guild.get_channel(self.category_open_id),
         )
         await channel_issue.edit(position=0)
+        await channel_issue.send(embed=get_default_embed(self.message_on_thread))
         await channel_issue.send(embed=compose_embed(message))
         await message.channel.send(
-            embed=get_default_embed(f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
+            embed=get_default_embed(
+                f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
         )
         if len(message.content) <= 30:
             await message.delete()
@@ -56,19 +60,20 @@ class DiscordBotPortalJP(commands.Cog):
             category=channel.guild.get_channel(self.category_closed_id)
         )
 
-    def is_category_open(self, message):
-        return message.channel.category_id == self.category_open_id
+    def is_category_open(self, channel):
+        return channel.category_id == self.category_open_id
 
-    async def if_category_open(self, message):
-        if message.content in self.close_keywords:
-            await self.dispatch_close(message.channel)
-            return
-        await self.dispatch_age(message)
-
-    def is_category_closed(self, message):
-        if '✅' in message.channel.category.name:
+    def is_category_closed(self, channel):
+        if '✅' in channel.category.name:
             return True
-        if '⛔' in message.channel.category.name:
+        if '⛔' in channel.category.name:
+            return True
+        return False
+
+    def is_category_thread(self.channel):
+        if self.is_category_open(channel):
+            return True
+        if self.is_category_closed(channel):
             return True
         return False
 
@@ -83,56 +88,66 @@ class DiscordBotPortalJP(commands.Cog):
             embed=get_default_embed(f'チャンネル名を以下に変更しました\n{rename} ')
         )
 
-    @commands.command()
-    async def name(self, ctx, *, rename):
-        conditions = (
-            self.is_category_open(ctx.message),
-            self.is_category_closed(ctx.message),
-        )
-        if not any(conditions):
-            return
-        await self.dispatch_rename(ctx.message, rename)
-
-    @commands.command()
-    async def archive(self, ctx):
-        if self.role_contributor_id in [role.id for role in ctx.author.roles]:
-            await ctx.channel.edit(
-                category=ctx.channel.guild.get_channel(self.category_archive_id)
+    async def dispatch_archive(self, channel, member):
+        if self.role_contributor_id in [role.id for role in member.roles]:
+            await channel.edit(
+                category=channel.guild.get_channel(self.category_archive_id)
             )
             return
-        if not ctx.author.guild_permissions.administrator:
+        if not member.guild_permissions.administrator:
             return
         guild = self.bot.get_guild(self.guild_logs_id)
         channel = await guild.create_text_channel(
-            name=ctx.channel.name,
-            topic=str(ctx.channel.created_at)
+            name=channel.name,
+            topic=str(channel.created_at)
         )
-        messages = await ctx.channel.history().flatten()
+        messages = await channel.history().flatten()
         for message in reversed(messages):
             if message.content:
                 await channel.send(embed=compose_embed(message))
             for embed in message.embeds:
                 await channel.send(embed=embed)
 
+    @commands.command()
+    async def name(self, ctx, *, rename):
+        message = ctx.message
+        channel = ctx.message.channel
+        conditions = (
+            self.is_category_open(channel),
+            self.is_category_closed(channel),
+        )
+        if not any(conditions):
+            return
+        await self.dispatch_rename(message, rename)
+
+    @commands.command()
+    async def archive(self, ctx):
+        channel = ctx.channel
+        author = ctx.author
+        await dispatch_archive(channel, author)
+
     @commands.Cog.listener()
     async def on_message(self, message):
+        channel = message.channel
         if message.guild.id != self.id:
             return
         if message.author.bot:
             return
-        if not isinstance(message.channel, discord.channel.TextChannel):
+        if not isinstance(channel, discord.channel.TextChannel):
             return
         ctx = await self.bot.get_context(message)
         if ctx.command:
             return
-        if self.is_category_open(message):
-            await self.if_category_open(message)
-            return
-        if message.channel.category_id == self.category_issues_id:
+        if self.is_category_open(channel):
+            if message.content in self.close_keywords:
+                await self.dispatch_close(message.channel)
+                return
+            await self.dispatch_age(message)
+        if channel.category_id == self.category_issues_id:
             await self.dispatch_thread(message)
             return
-        if self.is_category_closed(message):
-            await self.dispatch_reopen(message.channel)
+        if self.is_category_closed(channel):
+            await self.dispatch_reopen(channel)
             return
 
     @commands.Cog.listener()
@@ -146,22 +161,26 @@ class DiscordBotPortalJP(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
+        channel = self.bot.get_channel(payload.channel_id)
         if payload.guild_id != self.id:
-            return
-        if payload.emoji.name != '✅':
             return
         if self.bot.get_user(payload.user_id).bot:
             return
-        channel = self.bot.get_channel(payload.channel_id)
-        if channel.category_id != self.category_open_id:
-            return
-        await self.dispatch_close(channel)
+        if payload.emoji.name != '✅':
+            if not self.is_category_open(channel):
+                return
+            await self.dispatch_close(channel)
+        if payload.emoji.name != '🚫':
+            if not self.is_category_thread(channel):
+                return
+            await self.dispatch_archive(channel)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        if member.guild.id != self.id:
+        guild = member.guild
+        if guild.id != self.id:
             return
-        await member.guild.system_channel.send(f'{member.mention} が退出しました')
+        await guild.system_channel.send(f'{member.mention} が退出しました')
 
 
 def setup(bot):
