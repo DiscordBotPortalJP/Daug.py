@@ -21,6 +21,8 @@ class DiscordBotPortalJP(commands.Cog):
             'fix', 'fixes', 'fixed',
             'resolve', 'resolves', 'resolved',
         ]
+        self.message_on_thread = \
+            'この質問スレッドは close と発言することで解決済みカテゴリに移動します。'
 
     async def dispatch_thread(self, message):
         if len(name := message.content) > 30:
@@ -30,6 +32,7 @@ class DiscordBotPortalJP(commands.Cog):
             category=message.guild.get_channel(self.category_open_id),
         )
         await channel_issue.edit(position=0)
+        await channel_issue.send(embed=get_default_embed(self.message_on_thread))
         await channel_issue.send(embed=compose_embed(message))
         await message.channel.send(
             embed=get_default_embed(
