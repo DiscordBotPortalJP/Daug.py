@@ -166,11 +166,11 @@ class DiscordBotPortalJP(commands.Cog):
             return
         if self.bot.get_user(payload.user_id).bot:
             return
-        if payload.emoji.name != '✅':
+        if payload.emoji.name == '✅':
             if not self.is_category_open(channel):
                 return
             await self.dispatch_close(channel)
-        if payload.emoji.name != '🚫':
+        if payload.emoji.name == '🚫':
             if not self.is_category_thread(channel):
                 return
             await self.dispatch_archive(channel)
