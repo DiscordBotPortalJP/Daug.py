@@ -96,12 +96,12 @@ class DiscordBotPortalJP(commands.Cog):
             return
         if not member.guild_permissions.administrator:
             return
+        messages = await channel.history().flatten()
         guild = self.bot.get_guild(self.guild_logs_id)
         channel = await guild.create_text_channel(
             name=channel.name,
             topic=str(channel.created_at)
         )
-        messages = await channel.history().flatten()
         for message in reversed(messages):
             if message.content:
                 await channel.send(embed=compose_embed(message))
