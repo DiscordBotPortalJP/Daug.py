@@ -32,7 +32,8 @@ class DiscordBotPortalJP(commands.Cog):
         await channel_issue.edit(position=0)
         await channel_issue.send(embed=compose_embed(message))
         await message.channel.send(
-            embed=get_default_embed(f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
+            embed=get_default_embed(
+                f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
         )
         if len(message.content) <= 30:
             await message.delete()
@@ -97,7 +98,8 @@ class DiscordBotPortalJP(commands.Cog):
     async def archive(self, ctx):
         if self.role_contributor_id in [role.id for role in ctx.author.roles]:
             await ctx.channel.edit(
-                category=ctx.channel.guild.get_channel(self.category_archive_id)
+                category=ctx.channel.guild.get_channel(
+                    self.category_archive_id)
             )
             return
         if not ctx.author.guild_permissions.administrator:
