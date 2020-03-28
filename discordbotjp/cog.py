@@ -12,6 +12,7 @@ class DiscordBotPortalJP(commands.Cog):
         self.guild_logs_id = 674500858054180874
         self.role_member_id = 579591779364372511
         self.role_contributor_id = 631299456037289984
+        self.channel_tips_id = 693388545628438538
         self.category_issues_id = 601219955035209729
         self.category_open_id = 575935336765456394
         self.category_closed_id = 640090897417240576
@@ -108,6 +109,10 @@ class DiscordBotPortalJP(commands.Cog):
             for embed in message.embeds:
                 await channel.send(embed=embed)
 
+    async def dispatch_tips(self, message):
+        channel = self.bot.get_channel(self.channel_tips_id)
+        await channel.send(embed=compose_embed(message))
+
     @commands.command()
     async def name(self, ctx, *, rename):
         message = ctx.message
@@ -180,6 +185,9 @@ class DiscordBotPortalJP(commands.Cog):
             if not self.is_category_thread(channel):
                 return
             await self.dispatch_archive(channel, author)
+        if payload.emoji.name == '⭐':
+            message = await channel.fetch_message(payload.message_id)
+            await self.dispatch_tips(message)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
