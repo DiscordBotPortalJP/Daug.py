@@ -27,8 +27,8 @@ class DiscordBotPortalJP(commands.Cog):
 
     async def dispatch_thread(self, message):
         category_open = message.guild.get_channel(self.category_open_id)
-        if  any(str(message.author.id) in ch.topic for ch in category_open.text_channels):
-            text = f'{message.author.mention}未解決の質問があります。そちらを先に解決してください。'
+        if channels := [ch for ch in category_open.text_channels if str(message.author.id) in ch.topic]:
+            text = f'{message.author.mention} {channels[0].mention} こちらの質問が未解決です。'
             await message.channel.send(text)
             return
         if len(name := message.content) > 30:
