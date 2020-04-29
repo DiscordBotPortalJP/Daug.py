@@ -28,7 +28,8 @@ class DiscordBotPortalJP(commands.Cog):
     async def dispatch_thread(self, message):
         category_open = message.guild.get_channel(self.category_open_id)
         if  any(str(message.author.id) in ch.topic for ch in category_open.text_channels):
-            await message.channel.send('未解決の質問があります。そちらを先に解決してください。')
+            text = f'{message.author.mention}未解決の質問があります。そちらを先に解決してください。'
+            await message.channel.send(text)
             return
         if len(name := message.content) > 30:
             name = message.channel.name
