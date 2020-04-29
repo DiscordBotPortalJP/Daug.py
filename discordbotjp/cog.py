@@ -27,14 +27,14 @@ class DiscordBotPortalJP(commands.Cog):
 
     async def dispatch_thread(self, message):
         category_open = message.guild.get_channel(self.category_open_id)
-        questioners_ids = [int(ch.topic) for ch in category_open.text_channels]
-        if questioners_ids in message.id:
+        if  any(str(message.author.id) in ch.topic for ch in category_open.text_channels):
             await message.channel.send('未解決の質問があります。そちらを先に解決してください。')
             return
         if len(name := message.content) > 30:
             name = message.channel.name
         channel_issue = await message.guild.create_text_channel(
             name=name,
+            topic=message.author.id,
             category=category_open,
         )
         await channel_issue.edit(position=0)
