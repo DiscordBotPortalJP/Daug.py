@@ -9,7 +9,6 @@ class Thread(commands.Cog):
         self.bot = bot
         self.id = self.bot.config['discordbotjp']['guild_id']
         self.guild_logs_id = self.bot.config['discordbotjp']['guild_logs_id']
-        self.role_member_id = self.bot.config['discordbotjp']['role_member_id']
         self.role_contributor_id = self.bot.config['discordbotjp']['role_contributor_id']
         self.category_issues_id = self.bot.config['discordbotjp']['category_issues_id']
         self.category_open_id = self.bot.config['discordbotjp']['category_open_id']
