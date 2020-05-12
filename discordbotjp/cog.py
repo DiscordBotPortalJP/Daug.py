@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from dispander import compose_embed
 from echidna.daug import get_default_embed
-from echidna import base36
 
 
 class DiscordBotPortalJP(commands.Cog):
