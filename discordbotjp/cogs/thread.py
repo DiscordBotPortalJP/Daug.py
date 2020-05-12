@@ -4,7 +4,7 @@ from dispander import compose_embed
 from echidna.daug import get_default_embed
 
 
-class DiscordBotPortalJP(commands.Cog):
+class Thread(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.id = self.bot.config['discordbotjp']['guild_id']
