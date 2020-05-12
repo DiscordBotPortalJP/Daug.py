@@ -166,15 +166,6 @@ class DiscordBotPortalJP(commands.Cog):
             return
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):
-        if member.guild.id != self.id:
-            return
-        if member.bot:
-            return
-        role_member = member.guild.get_role(self.role_member_id)
-        await member.add_roles(role_member)
-
-    @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
         author = channel.guild.get_member(payload.user_id)
