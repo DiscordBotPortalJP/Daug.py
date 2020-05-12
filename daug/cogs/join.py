@@ -5,8 +5,8 @@ class Join(commands.Cog):
     """入室時の処理"""
     def __init__(self, bot):
         self.bot = bot
-        self.id = self.bot.config['discordbotjp']['guild_id']
-        self.role_member_id = self.bot.config['discordbotjp']['role_member_id']
+        self.id = self.bot.config['daug']['guild_id']
+        self.role_member_id = self.bot.config['daug']['role_member_id']
 
     @commands.Cog.listener()
     async def on_member_join(self, member):

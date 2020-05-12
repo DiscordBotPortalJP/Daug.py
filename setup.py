@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='discordbotjp',
+    name='daug',
     version='2020.5.13',
     py_modules=find_packages(),
     install_requires=[

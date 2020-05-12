@@ -5,7 +5,7 @@ class Leave(commands.Cog):
     """退出時の処理"""
     def __init__(self, bot):
         self.bot = bot
-        self.id = self.bot.config['discordbotjp']['guild_id']
+        self.id = self.bot.config['daug']['guild_id']
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):

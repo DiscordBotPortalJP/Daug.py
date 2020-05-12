@@ -7,13 +7,13 @@ from echidna.daug import get_default_embed
 class Thread(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.id = self.bot.config['discordbotjp']['guild_id']
-        self.guild_logs_id = self.bot.config['discordbotjp']['guild_logs_id']
-        self.role_contributor_id = self.bot.config['discordbotjp']['role_contributor_id']
-        self.category_issues_id = self.bot.config['discordbotjp']['category_issues_id']
-        self.category_open_id = self.bot.config['discordbotjp']['category_open_id']
-        self.category_closed_id = self.bot.config['discordbotjp']['category_closed_id']
-        self.category_archive_id = self.bot.config['discordbotjp']['category_archive_id']
+        self.id = self.bot.config['daug']['guild_id']
+        self.guild_logs_id = self.bot.config['daug']['guild_logs_id']
+        self.role_contributor_id = self.bot.config['daug']['role_contributor_id']
+        self.category_issues_id = self.bot.config['daug']['category_issues_id']
+        self.category_open_id = self.bot.config['daug']['category_open_id']
+        self.category_closed_id = self.bot.config['daug']['category_closed_id']
+        self.category_archive_id = self.bot.config['daug']['category_archive_id']
         self.close_keywords = [
             'close', 'closes', 'closed',
             'fix', 'fixes', 'fixed',

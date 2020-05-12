@@ -5,7 +5,7 @@ from echidna.daug import get_default_embed
 class Utils(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.id = self.bot.config['discordbotjp']['guild_id']
+        self.id = self.bot.config['daug']['guild_id']
 
     @commands.command(aliases=['ch'])
     async def channel_count(self, ctx):
