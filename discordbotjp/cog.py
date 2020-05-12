@@ -8,15 +8,15 @@ from echidna import base36
 class DiscordBotPortalJP(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.id = 494911447420108820
-        self.guild_logs_id = 674500858054180874
-        self.role_member_id = 579591779364372511
-        self.role_contributor_id = 631299456037289984
-        self.channel_tips_id = 693388545628438538
-        self.category_issues_id = 601219955035209729
-        self.category_open_id = 575935336765456394
-        self.category_closed_id = 640090897417240576
-        self.category_archive_id = 689447835590066212
+        self.id = self.bot.config['discordbotjp']['guild_id']
+        self.guild_logs_id = self.bot.config['discordbotjp']['guild_logs_id']
+        self.role_member_id = self.bot.config['discordbotjp']['role_member_id']
+        self.role_contributor_id = self.bot.config['discordbotjp']['role_contributor_id']
+        self.channel_tips_id = self.bot.config['discordbotjp']['channel_tips_id']
+        self.category_issues_id = self.bot.config['discordbotjp']['category_issues_id']
+        self.category_open_id = self.bot.config['discordbotjp']['category_open_id']
+        self.category_closed_id = self.bot.config['discordbotjp']['category_closed_id']
+        self.category_archive_id = self.bot.config['discordbotjp']['category_archive_id']
         self.close_keywords = [
             'close', 'closes', 'closed',
             'fix', 'fixes', 'fixed',
