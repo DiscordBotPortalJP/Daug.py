@@ -4,15 +4,15 @@ import os
 
 config = {
     'discordbotjp': {
-        'guild_id': 494911447420108820,
+        'guild_id': 709729198075412601,
         'guild_logs_id': 674500858054180874,
-        'role_member_id': 579591779364372511,
-        'role_contributor_id': 631299456037289984,
-        'channel_tips_id': 693388545628438538,
-        'category_issues_id': 601219955035209729,
-        'category_open_id': 575935336765456394,
-        'category_closed_id': 640090897417240576,
-        'category_archive_id': 689447835590066212,
+        'role_member_id': 709729198075412607,
+        'role_contributor_id': 709729198075412609,
+        'channel_tips_id': 709729198809415716,
+        'category_issues_id': 709729199228846140,
+        'category_open_id': 709729199509733383,
+        'category_closed_id': 709729199954329679,
+        'category_archive_id': 709729216245006457,
     },
 }
 
