@@ -2,21 +2,18 @@ import discord
 from discord.ext import commands
 from dispander import compose_embed
 from echidna.daug import get_default_embed
-from echidna import base36
 
 
-class DiscordBotPortalJP(commands.Cog):
+class Thread(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.id = 494911447420108820
-        self.guild_logs_id = 674500858054180874
-        self.role_member_id = 579591779364372511
-        self.role_contributor_id = 631299456037289984
-        self.channel_tips_id = 693388545628438538
-        self.category_issues_id = 601219955035209729
-        self.category_open_id = 575935336765456394
-        self.category_closed_id = 640090897417240576
-        self.category_archive_id = 689447835590066212
+        self.id = self.bot.config['daug']['guild_id']
+        self.guild_logs_id = self.bot.config['daug']['guild_logs_id']
+        self.role_contributor_id = self.bot.config['daug']['role_contributor_id']
+        self.category_issues_id = self.bot.config['daug']['category_issues_id']
+        self.category_open_id = self.bot.config['daug']['category_open_id']
+        self.category_closed_id = self.bot.config['daug']['category_closed_id']
+        self.category_archive_id = self.bot.config['daug']['category_archive_id']
         self.close_keywords = [
             'close', 'closes', 'closed',
             'fix', 'fixes', 'fixed',
@@ -115,10 +112,6 @@ class DiscordBotPortalJP(commands.Cog):
             for embed in message.embeds:
                 await channel.send(embed=embed)
 
-    async def dispatch_tips(self, message):
-        channel = self.bot.get_channel(self.channel_tips_id)
-        await channel.send(embed=compose_embed(message))
-
     @commands.command()
     async def name(self, ctx, *, rename):
         message = ctx.message
@@ -136,11 +129,6 @@ class DiscordBotPortalJP(commands.Cog):
         channel = ctx.channel
         author = ctx.author
         await self.dispatch_archive(channel, author)
-
-    @commands.command(aliases=['ch'])
-    async def channel_count(self, ctx):
-        count = len(ctx.guild.channels)
-        await ctx.channel.send(embed=get_default_embed(f'チャンネル数:{count}'))
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -167,15 +155,6 @@ class DiscordBotPortalJP(commands.Cog):
             return
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):
-        if member.guild.id != self.id:
-            return
-        if member.bot:
-            return
-        role_member = member.guild.get_role(self.role_member_id)
-        await member.add_roles(role_member)
-
-    @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
         author = channel.guild.get_member(payload.user_id)
@@ -191,17 +170,3 @@ class DiscordBotPortalJP(commands.Cog):
             if not self.is_category_thread(channel):
                 return
             await self.dispatch_archive(channel, author)
-        if payload.emoji.name == '⭐':
-            message = await channel.fetch_message(payload.message_id)
-            await self.dispatch_tips(message)
-
-    @commands.Cog.listener()
-    async def on_member_remove(self, member):
-        guild = member.guild
-        if guild.id != self.id:
-            return
-        await guild.system_channel.send(f'{member.mention} が退出しました')
-
-
-def setup(bot):
-    bot.add_cog(DiscordBotPortalJP(bot))
