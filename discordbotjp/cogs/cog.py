@@ -11,7 +11,6 @@ class DiscordBotPortalJP(commands.Cog):
         self.guild_logs_id = self.bot.config['discordbotjp']['guild_logs_id']
         self.role_member_id = self.bot.config['discordbotjp']['role_member_id']
         self.role_contributor_id = self.bot.config['discordbotjp']['role_contributor_id']
-        self.channel_tips_id = self.bot.config['discordbotjp']['channel_tips_id']
         self.category_issues_id = self.bot.config['discordbotjp']['category_issues_id']
         self.category_open_id = self.bot.config['discordbotjp']['category_open_id']
         self.category_closed_id = self.bot.config['discordbotjp']['category_closed_id']
@@ -114,10 +113,6 @@ class DiscordBotPortalJP(commands.Cog):
             for embed in message.embeds:
                 await channel.send(embed=embed)
 
-    async def dispatch_tips(self, message):
-        channel = self.bot.get_channel(self.channel_tips_id)
-        await channel.send(embed=compose_embed(message))
-
     @commands.command()
     async def name(self, ctx, *, rename):
         message = ctx.message
@@ -181,6 +176,3 @@ class DiscordBotPortalJP(commands.Cog):
             if not self.is_category_thread(channel):
                 return
             await self.dispatch_archive(channel, author)
-        if payload.emoji.name == '⭐':
-            message = await channel.fetch_message(payload.message_id)
-            await self.dispatch_tips(message)
