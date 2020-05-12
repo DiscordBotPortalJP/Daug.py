@@ -131,11 +131,6 @@ class DiscordBotPortalJP(commands.Cog):
         author = ctx.author
         await self.dispatch_archive(channel, author)
 
-    @commands.command(aliases=['ch'])
-    async def channel_count(self, ctx):
-        count = len(ctx.guild.channels)
-        await ctx.channel.send(embed=get_default_embed(f'チャンネル数:{count}'))
-
     @commands.Cog.listener()
     async def on_message(self, message):
         channel = message.channel
