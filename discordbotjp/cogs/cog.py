@@ -184,10 +184,3 @@ class DiscordBotPortalJP(commands.Cog):
         if payload.emoji.name == '⭐':
             message = await channel.fetch_message(payload.message_id)
             await self.dispatch_tips(message)
-
-    @commands.Cog.listener()
-    async def on_member_remove(self, member):
-        guild = member.guild
-        if guild.id != self.id:
-            return
-        await guild.system_channel.send(f'{member.mention} が退出しました')
