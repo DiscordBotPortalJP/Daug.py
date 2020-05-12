@@ -4,4 +4,6 @@ discord.py 向け Discord サーバー拡張ライブラリ
 
 # インストール方法
 
+```
 python3 -m pip install git+https://github.com/DiscordBotPortalJP/Daug.py.git
+```
