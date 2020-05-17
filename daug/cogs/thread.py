@@ -100,7 +100,7 @@ class Thread(commands.Cog):
             return
         if not member.guild_permissions.administrator:
             return
-        messages = await channel.history().flatten()
+        messages = await channel.history(limit=None).flatten()
         guild = self.bot.get_guild(self.guild_logs_id)
         channel = await guild.create_text_channel(
             name=channel.name,
