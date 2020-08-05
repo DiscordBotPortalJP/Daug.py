@@ -111,7 +111,7 @@ class Thread(commands.Cog):
                 await channel.send(embed=compose_embed(message))
             for embed in message.embeds:
                 await channel.send(embed=embed)
-        await channel.delete()
+        await message.channel.delete()
 
     @commands.command()
     async def name(self, ctx, *, rename):
