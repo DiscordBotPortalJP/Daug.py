@@ -1,3 +1,2 @@
-from Daug.extension import setup
-
-__all__ = ['setup']
+from Daug.extension import *
+from Daug.cogs import *
