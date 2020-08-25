@@ -6,8 +6,8 @@ class Favorite(commands.Cog):
     """お気に入り機能"""
     def __init__(self, bot):
         self.bot = bot
-        self.id = self.bot.config['daug']['guild_id']
-        self.channel_tips_id = self.bot.config['daug']['channel_tips_id']
+        self.id = self.bot.config['Daug']['guild_id']
+        self.channel_tips_id = self.bot.config['Daug']['channel_tips_id']
 
     async def dispatch_tips(self, message):
         channel = self.bot.get_channel(self.channel_tips_id)

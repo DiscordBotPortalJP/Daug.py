@@ -3,7 +3,7 @@ import logging
 import os
 
 config = {
-    'daug': {
+    'Daug': {
         'guild_id': 709729198075412601,
         'guild_logs_id': 674500858054180874,
         'role_member_id': 709729198075412607,
@@ -21,5 +21,5 @@ if __name__ == '__main__':
     bot = commands.Bot(command_prefix='/', help_command=None)
     token = os.environ['DISCORD_BOT_TOKEN']
     bot.config = config
-    bot.load_extension('daug.extension')
+    bot.load_extension('Daug.extension')
     bot.run(token)

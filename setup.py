@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='daug',
+    name='Daug',
     version='2020.8.25',
     py_modules=find_packages(),
     install_requires=[

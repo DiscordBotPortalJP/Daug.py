@@ -1,8 +1,8 @@
-from daug.cogs.favorite import Favorite
-from daug.cogs.join import Join
-from daug.cogs.leave import Leave
-from daug.cogs.thread import Thread
-from daug.cogs.utils import Utils
+from Daug.cogs.favorite import Favorite
+from Daug.cogs.join import Join
+from Daug.cogs.leave import Leave
+from Daug.cogs.thread import Thread
+from Daug.cogs.utils import Utils
 
 
 def setup(bot):
