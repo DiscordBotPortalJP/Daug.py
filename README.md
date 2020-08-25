@@ -1,9 +1,8 @@
 # Daug.py
-discord.py 向け Discord サーバー拡張ライブラリ  
-主にDiscordBotPortalJPサーバーの質問スレッドに使われています
+discord.py を利用した Discord Bot 向け機能拡張ライブラリ
 
 # インストール方法
 
 ```
-python3 -m pip install git+https://github.com/DiscordBotPortalJP/Daug.py.git
+python3 -m pip install Daug
 ```
