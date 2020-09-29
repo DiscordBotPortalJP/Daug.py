@@ -20,7 +20,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        'discord.py >= 1.4.1',
+        'discord.py >= 1.4.2',
         'dispander >= 0.4.0',
         'echidna >= 0.2.1',
     ],
