@@ -1,5 +1,5 @@
 from discord.ext import commands
-from echidna.daug import get_default_embed
+from Daug.cogs.functions.embeds import compose_embed_default
 
 
 class Utils(commands.Cog):
@@ -10,4 +10,4 @@ class Utils(commands.Cog):
     @commands.command(aliases=['ch'])
     async def channel_count(self, ctx):
         count = len(ctx.guild.channels)
-        await ctx.channel.send(embed=get_default_embed(f'チャンネル数:{count}'))
+        await ctx.channel.send(embed=compose_embed_default(f'チャンネル数:{count}'))

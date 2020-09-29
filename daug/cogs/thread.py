@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from dispander import compose_embed
-from echidna.daug import get_default_embed
+from Daug.cogs.functions.embeds import compose_embed_default
 
 
 class Thread(commands.Cog):
@@ -36,10 +36,10 @@ class Thread(commands.Cog):
             category=category_open,
         )
         await channel_issue.edit(position=0)
-        await channel_issue.send(embed=get_default_embed(self.message_on_thread))
+        await channel_issue.send(embed=compose_embed_default(self.message_on_thread))
         await channel_issue.send(embed=compose_embed(message))
         await message.channel.send(
-            embed=get_default_embed(
+            embed=compose_embed_default(
                 f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
         )
         if len(message.content) <= 30:
@@ -89,7 +89,7 @@ class Thread(commands.Cog):
     async def dispatch_rename(self, message, rename):
         await message.channel.edit(name=rename)
         await message.channel.send(
-            embed=get_default_embed(f'チャンネル名を以下に変更しました\n{rename} ')
+            embed=compose_embed_default(f'チャンネル名を以下に変更しました\n{rename} ')
         )
 
     async def dispatch_archive(self, channel, member):
