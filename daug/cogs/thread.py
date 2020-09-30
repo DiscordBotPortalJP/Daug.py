@@ -68,6 +68,8 @@ class Thread(commands.Cog):
         return channel.category_id == self.category_open_id
 
     def is_category_closed(self, channel):
+        if channel.category is None:
+            return False
         if '✅' in channel.category.name:
             return True
         if '🚫' in channel.category.name:
