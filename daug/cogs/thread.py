@@ -4,6 +4,25 @@ from dispander import compose_embed
 from Daug.cogs.functions.embeds import compose_embed_default
 
 
+async def change_category(channel, category) -> None:
+    """チャンネルのカテゴリを変更"""
+    await channel.edit(category=category)
+
+
+async def transfer(channel_origin, guild) -> None:
+    """テキストチャンネルを指定のguildに転送"""
+    channel = await guild.create_text_channel(
+        name=channel_origin.name,
+        topic=str(channel_origin.created_at)
+    )
+    async for message in channel.history(limit=None, oldest_first=True):
+        if message.content:
+            await channel.send(embed=compose_embed(message))
+        for embed in message.embeds:
+            await channel.send(embed=embed)
+    await message.channel.delete()
+
+
 class Thread(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -95,25 +114,17 @@ class Thread(commands.Cog):
         )
 
     async def dispatch_archive(self, channel, member):
-        if self.role_contributor_id in [role.id for role in member.roles]:
-            await channel.edit(
-                category=channel.guild.get_channel(self.category_archive_id)
+        category_archive = channel.guild.get_channel(self.category_archive_id)
+        if channel.category.id == category_archive.id:
+            if not member.guild_permissions.manage_channels:
+                return
+            await transfer(
+                channel_origin=channel,
+                guild=self.bot.get_guild(self.guild_logs_id)
             )
+        else:
+            await change_category(channel, category_archive)
             return
-        if not member.guild_permissions.administrator:
-            return
-        messages = await channel.history(limit=None).flatten()
-        guild = self.bot.get_guild(self.guild_logs_id)
-        channel = await guild.create_text_channel(
-            name=channel.name,
-            topic=str(channel.created_at)
-        )
-        for message in reversed(messages):
-            if message.content:
-                await channel.send(embed=compose_embed(message))
-            for embed in message.embeds:
-                await channel.send(embed=embed)
-        await message.channel.delete()
 
     @commands.command()
     async def name(self, ctx, *, rename):
