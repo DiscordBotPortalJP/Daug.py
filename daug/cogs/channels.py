@@ -2,7 +2,6 @@ import io
 import discord
 from time import time
 from discord.ext import commands
-from dispander import compose_embed
 
 
 def compose_channel_tree(guild):
