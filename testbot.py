@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import logging
 import os
@@ -18,7 +19,11 @@ config = {
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    bot = commands.Bot(command_prefix='/', help_command=None)
+    bot = commands.Bot(
+      command_prefix='/',
+      help_command=None,
+      intents=discord.Intents.all(),
+    )
     token = os.environ['DISCORD_BOT_TOKEN']
     bot.config = config
     bot.load_extension('Daug.extension')
