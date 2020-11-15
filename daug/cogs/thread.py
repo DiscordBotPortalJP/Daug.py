@@ -20,7 +20,7 @@ async def transfer(channel_origin, guild) -> None:
             await channel.send(embed=compose_embed(message))
         for embed in message.embeds:
             await channel.send(embed=embed)
-    await message.channel.delete()
+    await channel_origin.delete()
 
 
 class Thread(commands.Cog):
