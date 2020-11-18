@@ -15,7 +15,7 @@ async def transfer(channel_origin, guild) -> None:
         name=channel_origin.name,
         topic=str(channel_origin.created_at)
     )
-    async for message in channel.history(limit=None, oldest_first=True):
+    async for message in channel_origin.history(limit=None, oldest_first=True):
         if message.content:
             await channel.send(embed=compose_embed(message))
         for embed in message.embeds:
@@ -121,7 +121,7 @@ class Thread(commands.Cog):
                 channel_origin=channel,
                 guild=self.bot.get_guild(self.guild_logs_id)
             )
-            await channel_origin.delete()
+            await channel.delete()
         else:
             await change_category(channel, category_archive)
             return
