@@ -20,7 +20,6 @@ async def transfer(channel_origin, guild) -> None:
             await channel.send(embed=compose_embed(message))
         for embed in message.embeds:
             await channel.send(embed=embed)
-    await channel_origin.delete()
 
 
 class Thread(commands.Cog):
@@ -122,6 +121,7 @@ class Thread(commands.Cog):
                 channel_origin=channel,
                 guild=self.bot.get_guild(self.guild_logs_id)
             )
+            await channel_origin.delete()
         else:
             await change_category(channel, category_archive)
             return
