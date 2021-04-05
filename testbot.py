@@ -18,13 +18,18 @@ config = {
 }
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.WARNING)
     bot = commands.Bot(
-      command_prefix='/',
-      help_command=None,
-      intents=discord.Intents.all(),
+        command_prefix='/',
+        help_command=None,
+        intents=discord.Intents.all(),
     )
     token = os.environ['DISCORD_BOT_TOKEN']
     bot.config = config
-    bot.load_extension('Daug.extension')
+    bot.load_extension('Daug.extensions.channels')
+    bot.load_extension('Daug.extensions.favorite')
+    bot.load_extension('Daug.extensions.join')
+    bot.load_extension('Daug.extensions.leave')
+    bot.load_extension('Daug.extensions.thread')
+    bot.load_extension('Daug.extensions.utils')
     bot.run(token)

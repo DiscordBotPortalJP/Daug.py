@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
-from dispander import compose_embed
-from Daug.cogs.functions.embeds import compose_embed_default
+from Daug.functions.embeds import compose_embed_from_description
+from Daug.functions.embeds import compose_embed_from_message
 
 
 async def change_category(channel, category) -> None:
@@ -17,7 +17,7 @@ async def transfer(channel_origin, guild) -> None:
     )
     async for message in channel_origin.history(limit=None, oldest_first=True):
         if message.content:
-            await channel.send(embed=compose_embed(message))
+            await channel.send(embed=compose_embed_from_message(message))
         for embed in message.embeds:
             await channel.send(embed=embed)
 
@@ -54,10 +54,10 @@ class Thread(commands.Cog):
             category=category_open,
         )
         await channel_issue.edit(position=0)
-        await channel_issue.send(embed=compose_embed_default(self.message_on_thread))
-        await channel_issue.send(embed=compose_embed(message))
+        await channel_issue.send(embed=compose_embed_from_description(self.message_on_thread))
+        await channel_issue.send(embed=compose_embed_from_message(message))
         await message.channel.send(
-            embed=compose_embed_default(
+            embed=compose_embed_from_description(
                 f'スレッド {channel_issue.mention} を作成しました {message.author.mention}')
         )
         if len(message.content) <= 30:
@@ -109,7 +109,7 @@ class Thread(commands.Cog):
     async def dispatch_rename(self, message, rename):
         await message.channel.edit(name=rename)
         await message.channel.send(
-            embed=compose_embed_default(f'チャンネル名を以下に変更しました\n{rename} ')
+            embed=compose_embed_from_description(f'チャンネル名を以下に変更しました\n{rename} ')
         )
 
     async def dispatch_archive(self, channel, member):

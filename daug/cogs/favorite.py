@@ -1,5 +1,5 @@
 from discord.ext import commands
-from dispander import compose_embed
+from Daug.functions.embeds import compose_embed_from_message
 
 
 class Favorite(commands.Cog):
@@ -11,7 +11,7 @@ class Favorite(commands.Cog):
 
     async def dispatch_tips(self, message):
         channel = self.bot.get_channel(self.channel_tips_id)
-        await channel.send(embed=compose_embed(message))
+        await channel.send(embed=compose_embed_from_message(message))
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):

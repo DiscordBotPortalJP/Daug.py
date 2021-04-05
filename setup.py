@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='Daug',
-    version='2020.11.19.1',
+    version='2021.4.5.1',
     author='1ntegrale9',
     author_email='1ntegrale9uation@gmail.com',
     description='discord.py を利用した Discord Bot 向け機能拡張ライブラリ',
@@ -22,6 +22,5 @@ setup(
     ],
     install_requires=[
         'discord.py >= 1.5.0',
-        'dispander >= 0.4.0',
     ],
 )
