@@ -1,4 +1,5 @@
 from discord.ext import commands
+from Daug.functions import excepter
 from Daug.functions.embeds import compose_embed_from_message
 
 
@@ -14,6 +15,7 @@ class Favorite(commands.Cog):
         await channel.send(embed=compose_embed_from_message(message))
 
     @commands.Cog.listener()
+    @excepter
     async def on_raw_reaction_add(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
         author = channel.guild.get_member(payload.user_id)

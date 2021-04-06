@@ -2,6 +2,7 @@ import io
 import discord
 from time import time
 from discord.ext import commands
+from Daug.functions import excepter
 
 
 def compose_channel_tree(guild):
@@ -26,6 +27,7 @@ class Channels(commands.Cog):
 
     @commands.group()
     @commands.guild_only()
+    @excepter
     async def channels(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send('{} = Text:{} + Voice:{} + Category:{}'.format(
@@ -37,6 +39,7 @@ class Channels(commands.Cog):
 
     @channels.command()
     @commands.guild_only()
+    @excepter
     async def tree(self, ctx):
         await ctx.send(
             file=discord.File(

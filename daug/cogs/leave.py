@@ -1,4 +1,5 @@
 from discord.ext import commands
+from Daug.functions import excepter
 
 
 class Leave(commands.Cog):
@@ -8,6 +9,7 @@ class Leave(commands.Cog):
         self.id = self.bot.config['Daug']['guild_id']
 
     @commands.Cog.listener()
+    @excepter
     async def on_member_remove(self, member):
         guild = member.guild
         if guild.id != self.id:

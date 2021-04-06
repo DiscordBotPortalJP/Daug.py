@@ -1,4 +1,5 @@
 from discord.ext import commands
+from Daug.functions import excepter
 
 
 class Join(commands.Cog):
@@ -9,6 +10,7 @@ class Join(commands.Cog):
         self.role_member_id = self.bot.config['Daug']['role_member_id']
 
     @commands.Cog.listener()
+    @excepter
     async def on_member_join(self, member):
         if member.guild.id != self.id:
             return

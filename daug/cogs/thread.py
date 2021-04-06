@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from Daug.functions import excepter
 from Daug.functions.embeds import compose_embed_from_description
 from Daug.functions.embeds import compose_embed_from_message
 
@@ -127,6 +128,7 @@ class Thread(commands.Cog):
             return
 
     @commands.command()
+    @excepter
     async def name(self, ctx, *, rename):
         message = ctx.message
         channel = ctx.message.channel
@@ -139,12 +141,14 @@ class Thread(commands.Cog):
         await self.dispatch_rename(message, rename)
 
     @commands.command()
+    @excepter
     async def archive(self, ctx):
         channel = ctx.channel
         author = ctx.author
         await self.dispatch_archive(channel, author)
 
     @commands.Cog.listener()
+    @excepter
     async def on_message(self, message):
         channel = message.channel
         if message.guild.id != self.id:
@@ -169,6 +173,7 @@ class Thread(commands.Cog):
             return
 
     @commands.Cog.listener()
+    @excepter
     async def on_raw_reaction_add(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
         author = channel.guild.get_member(payload.user_id)
