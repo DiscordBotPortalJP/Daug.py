@@ -8,6 +8,7 @@ class Join(commands.Cog):
         self.bot = bot
         self.id = self.bot.config['Daug']['guild_id']
         self.role_member_id = self.bot.config['Daug']['role_member_id']
+        self.role_bot_limited_id = self.bot.config['Daug']['role_bot_limited_id']
 
     @commands.Cog.listener()
     @excepter
@@ -15,6 +16,8 @@ class Join(commands.Cog):
         if member.guild.id != self.id:
             return
         if member.bot:
-            return
-        role_member = member.guild.get_role(self.role_member_id)
-        await member.add_roles(role_member)
+            role_bot_limited = member.guild.get_role(self.role_bot_limited_id)
+            await member.add_roles(role_bot_limited)
+        else:
+            role_member = member.guild.get_role(self.role_member_id)
+            await member.add_roles(role_member)
