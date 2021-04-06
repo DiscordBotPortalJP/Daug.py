@@ -151,11 +151,11 @@ class Thread(commands.Cog):
     @excepter
     async def on_message(self, message):
         channel = message.channel
+        if not isinstance(channel, discord.channel.TextChannel):
+            return
         if message.guild.id != self.id:
             return
         if message.author.bot:
-            return
-        if not isinstance(channel, discord.channel.TextChannel):
             return
         ctx = await self.bot.get_context(message)
         if ctx.command:
