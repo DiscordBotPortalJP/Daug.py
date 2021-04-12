@@ -176,6 +176,8 @@ class Thread(commands.Cog):
     @excepter
     async def on_raw_reaction_add(self, payload):
         channel = self.bot.get_channel(payload.channel_id)
+        if not isinstance(channel, discord.channel.TextChannel):
+            return
         author = channel.guild.get_member(payload.user_id)
         if payload.guild_id != self.id:
             return
