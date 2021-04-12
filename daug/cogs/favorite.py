@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from Daug.functions import excepter
 from Daug.functions.embeds import compose_embed_from_message
