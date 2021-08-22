@@ -1,23 +1,8 @@
-import io
-import discord
 from time import time
 from discord.ext import commands
 from Daug.functions import excepter
-
-
-def compose_channel_tree(guild):
-    tree = []
-    for category in guild.by_category():
-        if category[0] is None:
-            tree.append('C#')
-        else:
-            tree.append(f'C# {category[0].name}')
-        for channel in category[1]:
-            if isinstance(channel, discord.channel.TextChannel):
-                tree.append(f'  T# {channel.name}')
-            if isinstance(channel, discord.channel.VoiceChannel):
-                tree.append(f'  V# {channel.name}')
-    return '\n'.join(tree)
+from Daug.functions import send_file_from_text
+from Daug.functions import compose_channel_tree
 
 
 class Channels(commands.Cog):
@@ -41,9 +26,8 @@ class Channels(commands.Cog):
     @commands.guild_only()
     @excepter
     async def tree(self, ctx):
-        await ctx.send(
-            file=discord.File(
-                io.StringIO(compose_channel_tree(ctx.guild)),
-                f'channels{int(time())}.txt',
-            )
+        await send_file_from_text(
+            channel=ctx.channel,
+            text=compose_channel_tree(ctx.guild),
+            filename=f'channels{int(time())}.txt'
         )
