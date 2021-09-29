@@ -21,6 +21,6 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        'discord.py >= 1.7.1',
+        'discord.py >= 1.7.3',
     ],
 )
