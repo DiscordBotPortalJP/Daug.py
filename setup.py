@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='Daug',
-    version='2021.4.12.2',
+    version='2022.2.20.1',
     author='1ntegrale9',
     author_email='1ntegrale9uation@gmail.com',
     description='discord.py を利用した Discord Bot 向け機能拡張ライブラリ',
@@ -21,6 +21,6 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        'discord.py >= 1.7.1',
+        'discord.py >= 1.7.3',
     ],
 )
