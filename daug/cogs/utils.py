@@ -33,18 +33,14 @@ class Utils(commands.Cog):
             return
 
         guild = ctx.guild
-        committer_perm_role = guild.get_role(self.committer_perm_role_id)
-        staff_perm_role = guild.get_role(self.staff_perm_role_id)
-
+        perm_role = None
         if self.is_staff(ctx.author):
-            await ctx.author.add_roles(staff_perm_role)
-            await asyncio.sleep(300)
-            await ctx.author.remove_roles(staff_perm_role)
-
+           perm_role = guild.get_role(self.staff_perm_role_id)
         elif self.is_committer(ctx.author):
-            await ctx.author.add_roles(committer_perm_role)
-            await asyncio.sleep(300)
-            await ctx.author.remove_roles(committer_perm_role)
-
-        else:
+           perm_role = guild.get_role(self.committer_perm_role_id)
+        if perm_role is None:
             return
+
+        await ctx.author.add_roles(perm_role)
+        await asyncio.sleep(300)
+        await ctx.author.remove_roles(perm_role)
