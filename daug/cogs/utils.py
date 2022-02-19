@@ -32,7 +32,7 @@ class Utils(commands.Cog):
 
     @commands.command(aliases=['sp'])
     @excepter
-    async def switch_perm(self, ctx: commands.Context):
+    async def switch_perm(self, ctx):
         if ctx.guild.id != self.id:
             return
 
