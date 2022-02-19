@@ -15,14 +15,10 @@ class Utils(commands.Cog):
         self.staff_perm_role_id = self.bot.config['Daug']['role_staff_perm_id']
 
     def is_committer(self, author) -> bool:
-        if self.committer_role_id not in [role.id for role in author.roles]:
-            return False
-        return True
+        return self.committer_role_id in [role.id for role in author.roles]
 
     def is_staff(self, author) -> bool:
-        if self.staff_role_id not in [role.id for role in author.roles]:
-            return False
-        return True
+        return self.staff_role_id in [role.id for role in author.roles]
 
     @commands.command(aliases=['ch'])
     @excepter
