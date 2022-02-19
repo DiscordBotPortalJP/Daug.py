@@ -30,9 +30,9 @@ class Utils(commands.Cog):
         count = len(ctx.guild.channels)
         await ctx.channel.send(embed=compose_embed_from_description(f'チャンネル数:{count}'))
 
-    @commands.command(aliases=['sp'])
+    @commands.command(aliases=['auth', 'su'])
     @excepter
-    async def switch_perm(self, ctx):
+    async def authorization(self, ctx):
         if ctx.guild.id != self.id:
             return
 
