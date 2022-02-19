@@ -4,6 +4,7 @@ from discord.ext import commands
 from Daug.functions import excepter
 from Daug.functions.embeds import compose_embed_from_description
 
+expiration_minutes = 300
 
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -39,8 +40,9 @@ class Utils(commands.Cog):
         elif self.is_committer(ctx.author):
             perm_role = guild.get_role(self.committer_perm_role_id)
         if perm_role is None:
-            return
+            return await ctx.reply('付与できる権限がありません')
 
         await ctx.author.add_roles(perm_role)
-        await asyncio.sleep(300)
+        await ctx.reply(f'{perm_role.name} を付与しました。{expiration_minutes}秒後に解除されます。')
+        await asyncio.sleep(expiration_minutes)
         await ctx.author.remove_roles(perm_role)
