@@ -35,9 +35,9 @@ class Utils(commands.Cog):
         guild = ctx.guild
         perm_role = None
         if self.is_staff(ctx.author):
-           perm_role = guild.get_role(self.staff_perm_role_id)
+            perm_role = guild.get_role(self.staff_perm_role_id)
         elif self.is_committer(ctx.author):
-           perm_role = guild.get_role(self.committer_perm_role_id)
+            perm_role = guild.get_role(self.committer_perm_role_id)
         if perm_role is None:
             return
 
