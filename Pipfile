@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-discord-py = {extras = ["voice"],version = "==1.7.*"}
+discord-py = {extras = ["voice"],version = "==2.1.*"}
 
 [requires]
 python_version = "3.8"
