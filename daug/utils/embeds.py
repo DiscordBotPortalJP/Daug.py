@@ -1,26 +1,23 @@
-from discord import Colour
-from discord import Embed
-
+import discord
 
 def compose_embed_from_description(description):
-    return Embed.from_dict({
+    return discord.Embed.from_dict({
         'description': description,
-        'color': Colour.blue().value,
+        'color': discord.Colour.blue().value,
     })
 
-
 def compose_embed_from_message(message):
-    embed = Embed(
+    embed = discord.Embed(
         description=message.content,
         timestamp=message.created_at,
     )
     embed.set_author(
         name=message.author.display_name,
-        icon_url=message.author.avatar_url,
+        icon_url=message.author.display_avatar.url,
     )
     embed.set_footer(
         text=message.channel.name,
-        icon_url=message.guild.icon_url,
+        icon_url=message.guild.icon.url,
     )
     if message.attachments and message.attachments[0].proxy_url:
         embed.set_image(

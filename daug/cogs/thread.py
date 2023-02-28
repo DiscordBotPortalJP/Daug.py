@@ -1,14 +1,12 @@
 import discord
 from discord.ext import commands
-from Daug.functions import excepter
-from Daug.functions.embeds import compose_embed_from_description
-from Daug.functions.embeds import compose_embed_from_message
-
+from Daug.utils import excepter
+from Daug.utils.embeds import compose_embed_from_description
+from Daug.utils.embeds import compose_embed_from_message
 
 async def change_category(channel, category) -> None:
     """チャンネルのカテゴリを変更"""
     await channel.edit(category=category)
-
 
 async def transfer(channel_origin, guild) -> None:
     """テキストチャンネルを指定のguildに転送"""
@@ -22,17 +20,15 @@ async def transfer(channel_origin, guild) -> None:
         for embed in message.embeds:
             await channel.send(embed=embed)
 
-
 class Thread(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, guild_id, guild_archive_id, category_issues_id, category_open_id, category_closed_id, category_archive_id):
         self.bot = bot
-        self.id = self.bot.config['Daug']['guild_id']
-        self.guild_logs_id = self.bot.config['Daug']['guild_logs_id']
-        self.role_contributor_id = self.bot.config['Daug']['role_contributor_id']
-        self.category_issues_id = self.bot.config['Daug']['category_issues_id']
-        self.category_open_id = self.bot.config['Daug']['category_open_id']
-        self.category_closed_id = self.bot.config['Daug']['category_closed_id']
-        self.category_archive_id = self.bot.config['Daug']['category_archive_id']
+        self.guild_id = guild_id
+        self.guild_archive_id = guild_archive_id
+        self.category_issues_id = category_issues_id
+        self.category_open_id = category_open_id
+        self.category_closed_id = category_closed_id
+        self.category_archive_id = category_archive_id
         self.close_keywords = [
             'close', 'closes', 'closed',
             'fix', 'fixes', 'fixed',
@@ -120,7 +116,7 @@ class Thread(commands.Cog):
                 return
             await transfer(
                 channel_origin=channel,
-                guild=self.bot.get_guild(self.guild_logs_id)
+                guild=self.bot.get_guild(self.guild_archive_id)
             )
             await channel.delete()
         else:
@@ -153,7 +149,7 @@ class Thread(commands.Cog):
         channel = message.channel
         if not isinstance(channel, discord.channel.TextChannel):
             return
-        if message.guild.id != self.id:
+        if message.guild.id != self.guild_id:
             return
         if message.author.bot:
             return
@@ -179,7 +175,7 @@ class Thread(commands.Cog):
         if not isinstance(channel, discord.channel.TextChannel):
             return
         author = channel.guild.get_member(payload.user_id)
-        if payload.guild_id != self.id:
+        if payload.guild_id != self.guild_id:
             return
         if author.bot:
             return

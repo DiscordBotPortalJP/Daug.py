@@ -1,23 +1,25 @@
 from discord.ext import commands
-from Daug.functions import excepter
-
+from Daug.utils import excepter
 
 class Join(commands.Cog):
-    """入室時の処理"""
-    def __init__(self, bot):
+    """メンバー入室時"""
+    def __init__(self, bot, guild_id, channel_id = None, role_member_id = None, role_bot_id = None):
         self.bot = bot
-        self.id = self.bot.config['Daug']['guild_id']
-        self.role_member_id = self.bot.config['Daug']['role_member_id']
-        self.role_bot_limited_id = self.bot.config['Daug']['role_bot_limited_id']
+        self.guild_id = guild_id
+        self.channel_id = channel_id
+        self.role_member_id = role_member_id
+        self.role_bot_id = role_bot_id
 
     @commands.Cog.listener()
     @excepter
     async def on_member_join(self, member):
-        if member.guild.id != self.id:
+        if member.guild.id != self.guild_id:
             return
-        if member.bot:
-            role_bot_limited = member.guild.get_role(self.role_bot_limited_id)
-            await member.add_roles(role_bot_limited)
-        else:
+        if self.channel_id is not None:
+            self.bot.get_channel(self.channel_id).send(f'{member.mention} が入室しました')
+        if not member.bot and self.role_member_id is not None:
             role_member = member.guild.get_role(self.role_member_id)
             await member.add_roles(role_member)
+        if member.bot and self.role_bot_id is not None:
+            role_bot = member.guild.get_role(self.role_bot_id)
+            await member.add_roles(role_bot)

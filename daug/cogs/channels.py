@@ -2,8 +2,7 @@ import io
 import discord
 from time import time
 from discord.ext import commands
-from Daug.functions import excepter
-
+from Daug.utils import excepter
 
 def compose_channel_tree(guild):
     tree = []
@@ -19,11 +18,17 @@ def compose_channel_tree(guild):
                 tree.append(f'  V# {channel.name}')
     return '\n'.join(tree)
 
-
 class Channels(commands.Cog):
-    """チャンネル関連"""
+    """チャンネル情報取得"""
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(aliases=['ch'])
+    @commands.guild_only()
+    @excepter
+    async def channel_count(self, ctx):
+        count = len(ctx.guild.channels)
+        await ctx.channel.send(embed=discord.Embed(description=f'チャンネル数:{count}'))
 
     @commands.group()
     @commands.guild_only()

@@ -5,9 +5,9 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='Daug',
-    version='2022.2.20.2',
-    author='1ntegrale9',
-    author_email='1ntegrale9uation@gmail.com',
+    version='2023.2.28.1',
+    author='Discord Bot Portal JP',
+    author_email='discordbot.jp@gmail.com',
     description='discord.py を利用した Discord Bot 向け機能拡張ライブラリ',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -17,10 +17,11 @@ setup(
     classifiers=[
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        'discord.py >= 1.7.3',
+        'discord.py >= 2.1.1',
     ],
 )
