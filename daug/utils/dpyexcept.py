@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from os import getenv
 
 load_dotenv()
-CHANNEL_TRACEBACK_ID = getenv('CHANNEL_TRACEBACK_ID')
+CHANNEL_TRACEBACK_ID = int(getenv('CHANNEL_TRACEBACK_ID'))
 
 
 def excepter(func, *, _channel_id=None):

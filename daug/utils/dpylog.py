@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from os import getenv
 
 load_dotenv()
-CHANNEL_LOG_ID = getenv('CHANNEL_LOG_ID')
+CHANNEL_LOG_ID = int(getenv('CHANNEL_LOG_ID'))
 
 
 def dpylogger(func, *, _channel_id=None):
