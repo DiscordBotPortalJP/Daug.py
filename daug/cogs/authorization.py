@@ -1,6 +1,6 @@
 import asyncio
 from discord.ext import commands
-from Daug.utils import excepter
+from daug.utils.dpyexcept import excepter
 
 class Utils(commands.Cog):
     def __init__(self, bot, guild_id, role_always_id, role_permission_id, expiration_minutes = 300):

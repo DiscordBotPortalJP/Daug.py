@@ -3,8 +3,8 @@ import aiohttp
 import re
 import discord
 from discord.ext import commands
-from constants import COLOUR_EMBED_GRAY
-from constants import EMOJI_NUMBERS
+from daug.constants import COLOUR_EMBED_GRAY
+from daug.constants import EMOJI_NUMBERS
 
 
 def extract_mentions(guild: discord.Guild, text: str) -> list[discord.Member]:

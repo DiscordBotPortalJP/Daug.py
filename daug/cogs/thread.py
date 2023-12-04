@@ -1,8 +1,9 @@
 import discord
 from discord.ext import commands
-from Daug.utils import excepter
-from Daug.utils.embeds import compose_embed_from_description
-from Daug.utils.embeds import compose_embed_from_message
+from daug.utils import compose_embed_from_description
+from daug.utils import compose_embed_from_message
+from daug.utils.dpyexcept import excepter
+
 
 async def change_category(channel, category) -> None:
     """チャンネルのカテゴリを変更"""

@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
-from Daug.utils import excepter
-from Daug.utils.embeds import compose_embed_from_message
+from daug.utils import compose_embed_from_message
+from daug.utils.dpyexcept import excepter
+
 
 class Favorite(commands.Cog):
     """お気に入り掲載"""

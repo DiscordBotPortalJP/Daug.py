@@ -2,7 +2,7 @@ import io
 import discord
 from time import time
 from discord.ext import commands
-from Daug.utils import excepter
+from daug.utils.dpyexcept import excepter
 
 def compose_channel_tree(guild):
     tree = []
