@@ -8,7 +8,7 @@ from daug.constants import EMOJI_NUMBERS
 
 
 def get_channel_members(channel: discord.TextChannel | discord.VoiceChannel):
-    if channel.type is discord.TextChannel:
+    if type(channel) is discord.TextChannel:
         return channel.members
     members = set()
     for target, overwrite in channel.overwrites.items():
