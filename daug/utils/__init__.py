@@ -7,6 +7,16 @@ from daug.constants import COLOUR_EMBED_GRAY
 from daug.constants import EMOJI_NUMBERS
 
 
+def get_channel_members(channel: discord.TextChannel | discord.VoiceChannel):
+    if channel.type is discord.TextChannel:
+        return channel.members
+    members = set()
+    for target, overwrite in channel.overwrites.items():
+        if overwrite.read_messages and type(target) is discord.Member:
+            members.add(target)
+    return members
+
+
 def extract_mentions(guild: discord.Guild, text: str) -> list[discord.Member]:
     return [guild.get_member(int(x)) for x in re.findall(r'<@!?([0-9]{15,20})>', text) if guild.get_member(int(x))]
 
